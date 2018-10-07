@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  h2= list.id
+  h2= list.name
+  ul
+    each card, index in list.cards
+      div(class="row")
+        p= card.name
+    else
+      p="Your list is empty!"
+  form(action="/list/" + list.id + "/addCard")
+    input(type="text", name="card")
+    input(type="checkbox" id="need-give" data-toggle="toggle")
