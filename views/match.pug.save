@@ -1,9 +1,8 @@
 extends ../layout
 block script
-  link(rel="stylesheet", type="text/css", href="../list.css")
-  link(rel="stylesheet", type="text/css", href="../app.css")
-  link(rel= "stylesheet", type= "text/css", href= "../circle-button.css")
-  link(rel= "stylesheet", type= "text/css", href= "../all.css")
+  link(rel="stylesheet", type="text/css", href="list.css")
+  link(rel="stylesheet", type="text/css", href="match.css")
+  link(rel="stylesheet", type="text/css", href="app.css")
 block title
   p= list.name
 block content
@@ -20,4 +19,3 @@ block content
           p(style="align-self:center;") Need
     else
       p="Your list is empty!"
-    button(type= "button", class="btn btn-circle btn-xl") +

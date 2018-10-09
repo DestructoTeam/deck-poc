@@ -1,0 +1,21 @@
+extends layout
+block script
+  link(rel="stylesheet", type="text/css", href="profile.css")
+  link(rel="stylesheet", type="text/css", href="app.css")
+block title
+  p Your Profile
+block content
+  form(method='POST' action='/profile')
+    div.form-group
+      label(for='name') Change name:
+      input#name.form-control.row-list(type='text', name='name', value=profile.name)
+    div.form-group
+      label(for='email') Change email:
+      input#email.form-control.row-list(type='email', name='email', value=profile.email)
+    div.form-group
+      label(for='pw') New password:
+      input#pw.form-control.row-list(type='password' name='password')
+    div.form-group
+      label(for='pw2') Confirm new password:
+      input#pw2.form-control.row-list(type='password' name='confirmPassword')
+    button(type= "button", class="btn btn-circle btn-xl") &gt;

@@ -13,6 +13,11 @@ html
     href= "circle-button.css"
     )
     link(
+    rel= "stylesheet"
+    type= "text/css"
+    href= "all.css"
+    )
+    link(
     rel="stylesheet"
     href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
     )
@@ -36,4 +41,9 @@ html
     )
     block script
   body
-    block content
+    .jumbotron.vertical-center
+      .main.container
+        div.display-2
+          block title
+          br
+          block content
