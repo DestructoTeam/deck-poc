@@ -5,6 +5,8 @@ block script
   link(rel="stylesheet", type="text/css", href="app.css")
 block title
   p= match.name
+block navbar
+  include nav
 block content
   ul
     each card, index in match.cards

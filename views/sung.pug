@@ -1,0 +1,22 @@
+extends layout
+block script
+  link(rel="stylesheet", type="text/css", href="app.css")
+  link(rel="stylesheet", type="text/css", href="sung.css")
+block title
+  p Sign Up
+block content
+  form(method='POST' action='/sung')
+    div.form-group
+      label(for='name', style="font-size:3.5rem;") Name:
+      input#name.form-control.row-list(type='text', placeholder='first and last', name='name', style="font-size:2rem;padding:2.375rem .75rem;")
+    div.form-group
+      label(for='email', style="font-size:3.5rem;") Email:
+      input#email.form-control.row-list(type='email', placeholder='name@email.com', name='email', style="font-size:2rem;padding:2.375rem .75rem;")
+    div.form-group
+      label(for='pw', style="font-size:3.5rem;") Password:
+      input#pw.form-control.row-list(type='password', name='password', style="font-size:2rem;padding:2.375rem .75rem;")
+    div.form-group
+      label(for='pw2', style="font-size:3.5rem;") Confirm Password:
+      input#pw2.form-control.row-list(type='password', name='confirmPassword', style="font-size:2rem;padding:2.375rem .75rem;")
+    br
+    button.btn.btn-primary(type='submit', style="font-size:2rem;") Sign up
