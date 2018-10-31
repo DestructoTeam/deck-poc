@@ -1,22 +1,27 @@
 const express = require("express");
 const pug = require("pug");
 const listing = require("./src/listing/route");
+const cards = require ("./src/cards/route.js");
 const bodyParser = require("body-parser");
 
 const app = express();
 
 app.set("view engine", "pug");
 
-app.use(express.static(__dirname + "/includes/css"));
+app.use(express.static(__dirname + "/includes"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use("/list", listing);
 
 app.get("/", (req, res) => {
     res.render('sing');
 });
+
+app.use("/list", listing);
+
+app.use("/cards", cards);
+
 app.get("/sing", (req, res) => {
     res.render('sing');
 });

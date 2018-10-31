@@ -1,9 +1,8 @@
 extends ../layout
 block script
-  link(rel="stylesheet", type="text/css", href="../list.css")
-  link(rel="stylesheet", type="text/css", href="../app.css")
-  link(rel= "stylesheet", type= "text/css", href= "../circle-button.css")
-  link(rel= "stylesheet", type= "text/css", href= "../all.css")
+  link(rel="stylesheet", type="text/css", href="../css/list.css")
+  link(rel="stylesheet", type="text/css", href="../css/app.css")
+  script(src="../js/mtg.js")
 block title
   p= list.name
 block navbar
@@ -27,10 +26,11 @@ block content
     .modal-dialog.modal-dialog-centered.modal-lg(role="document")
       .modal-content
         .modal-header
-          p#exampleModalLongTitle.modal-title Add a card
           button.close(type="button", data-dismiss="modal", aria-label="Close")
             span(aria-hidden="true") &times;
         .modal-body
-          p Test
-        .modal-footer
-          button.btn.btn-primary(type="button", data-dismiss="modal") Add
+          form#form-add-card.form-control
+            div.form-goup.row
+              input.form-control#add-card(type="text", onchange="onChangeSearch()")
+              button.btn.btn-primary(type="submit") Add Card
+        .modal-header
