@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 31 oct. 2018 à 09:42
+-- Généré le :  mer. 31 oct. 2018 à 09:55
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `card` (
 DROP TABLE IF EXISTS `list`;
 CREATE TABLE IF NOT EXISTS `list` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   `wanted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
