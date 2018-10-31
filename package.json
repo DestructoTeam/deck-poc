@@ -19,6 +19,7 @@
   "homepage": "https://github.com/DestructoTeam/deck-poc#readme",
   "dependencies": {
     "angular": "^1.7.5",
+    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "less": "^3.8.1",
