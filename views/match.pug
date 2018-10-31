@@ -1,0 +1,37 @@
+extends layout
+block script
+  link(rel="stylesheet", type="text/css", href="list.css")
+  link(rel="stylesheet", type="text/css", href="match.css")
+  link(rel="stylesheet", type="text/css", href="app.css")
+block title
+  p= match.name
+block navbar
+  include nav
+block content
+  ul
+    each card, index in match.cards
+      .row.row-list
+        .row.col-md-12
+          p.offset-md-1.col-md-11(style="font-size:3rem;")= card.name
+        .row.col-md-8
+          img.rounded.mx-auto.d-block(style="margin-top:30px; margin-bottom:30px;", src=card.imageUrl)
+        .row.col-md-4
+          p(style="align-self:center;") Give
+    br
+    each message, index in match.messages
+      if message.who === "You"
+        .row.row-list.offset-md-2.col-md-10
+          .row.col-md-12
+            p.offset-md-1.col-md-11(style="font-size:3rem;")= message.who
+          .row.col-md-12
+            p.offset-md-1.col-md-11(style="font-size:2rem;")= message.message
+      else
+        .row.row-list.col-md-10
+          .row.col-md-12
+            p.offset-md-1.col-md-11(style="font-size:3rem;")= message.who
+          .row.col-md-12
+            p.offset-md-1.col-md-11(style="font-size:2rem;")= message.message
+    br
+    .row.col-md-12
+      input.row-list.col-md-12(style="font-size:2rem;padding-top:15px;padding-bottom:15px;")
+    button(type= "button", class="btn btn-circle btn-xl") &gt;

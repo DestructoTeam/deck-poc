@@ -1,4 +1,29 @@
 extends layout
+block script
+  link(rel="stylesheet", type="text/css", href="app.css")
+  script(src="remove-list.js")
+block navbar
+  include nav
+block title
+  p Your List
 block content
-  h1 "Hello World"
-  button(class="btn btn-primary") "X"
+  ul
+    each list, index in lists
+      .row.row-list(id='list' + list.id)
+        a.offset-md-1.col-md-9(href='list/' + list.id)= list.name
+        button.close.col-md-2.remove-list(type="button", aria-label="Close", data-id=list.id, onclick="removeList(" + list.id + ");")
+          span(aria-hidden="true") &times;
+    else
+      p No list.
+    button.btn.btn-circle.btn-xl(type= "button", data-toggle="modal", data-target="#exampleModalCenter") +
+  #exampleModalCenter.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalCenterTitle", aria-hidden="true")
+    .modal-dialog.modal-dialog-centered.modal-lg(role="document")
+      .modal-content
+        .modal-header
+          p#exampleModalLongTitle.modal-title Add a list
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true") &times;
+        .modal-body
+          p Test
+        .modal-footer
+          button.btn.btn-primary(type="button", data-dismiss="modal") Add

@@ -1,25 +1,16 @@
 extends layout
-
+block script
+  link(rel="stylesheet", type="text/css", href="app.css")
+  link(rel="stylesheet", type="text/css", href="sing.css")
+block title
+  p Sign In
 block content
-  .main.container
-    .row
-      .col-md-6.col-md-offset-3
-        h1.display-4.m-b-2 Sign Up
-
-        form(method='POST' action='/register')
-          div.form-group
-            label(for='name') Name:
-            input#name.form-control(type='text', placeholder='first and last' name='name')
-          div.form-group
-            label(for='email') Email:
-            input#email.form-control(type='email', placeholder='name@email.com' name='email')
-          div.form-group
-            label(for='favoriteBook') Favorite Book:
-            input#favoriteBook.form-control(type='text', placeholder='title of book' name='favoriteBook')
-          div.form-group
-            label(for='pw') Password:
-            input#pw.form-control(type='password' name='password')
-          div.form-group
-            label(for='pw2') Confirm Password:
-	    input#pw2.form-control(type='password' name='confirmPassword')
-	    button.btn.btn-primary(type='submit') Sign up
+  form(method='POST' action='/sing')
+    div.form-group
+      label(for='email', style="font-size:3.5rem;") Email:
+      input#email.form-control.row-list(type='email', placeholder='name@email.com', name='email', style="font-size:2rem;padding:2.375rem .75rem;")
+    div.form-group
+      label(for='pw', style="font-size:3.5rem;") Password:
+      input#pw.form-control.row-list(type='password', name='password', style="font-size:2rem;padding:2.375rem .75rem;")
+    br
+    button.btn.btn-primary(type='submit', style="font-size:2rem;") Sign In

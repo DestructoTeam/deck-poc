@@ -1,0 +1,17 @@
+extends layout
+block script
+  link(rel="stylesheet", type="text/css", href="app.css")
+  link(rel="stylesheet", type="text/css", href="matches.css")
+block title
+  p Matches
+block navbar
+  include nav
+block content
+  ul
+    each match, index in matches
+      .row.row-list
+        a.offset-md-1.col-md-9(href='match/' + match.id)= match.name
+        button.close.col-md-2(type="button", aria-label="Close")
+          span(aria-hidden="true") &times;
+    else
+      p No match.

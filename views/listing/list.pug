@@ -1,0 +1,36 @@
+extends ../layout
+block script
+  link(rel="stylesheet", type="text/css", href="../list.css")
+  link(rel="stylesheet", type="text/css", href="../app.css")
+  link(rel= "stylesheet", type= "text/css", href= "../circle-button.css")
+  link(rel= "stylesheet", type= "text/css", href= "../all.css")
+block title
+  p= list.name
+block navbar
+  include ../nav
+block content
+  ul
+    each card, index in list.cards
+      .row.row-list
+        .row.col-md-12
+          p.offset-md-1.col-md-9(style="font-size:3rem;")= card.name
+          button.close.col-md-2(type="button", aria-label="Close")
+            span(aria-hidden="true") &times;
+        .row.col-md-8
+          img.rounded.mx-auto.d-block(style="margin-top:30px; margin-bottom:30px;", src=card.imageUrl)
+        .row.col-md-4
+          p(style="align-self:center;") Need
+    else
+      p Your list is empty!
+    button.btn.btn-circle.btn-xl(type= "button", data-toggle="modal", data-target="#exampleModalCenter") +
+  #exampleModalCenter.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalCenterTitle", aria-hidden="true")
+    .modal-dialog.modal-dialog-centered.modal-lg(role="document")
+      .modal-content
+        .modal-header
+          p#exampleModalLongTitle.modal-title Add a card
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true") &times;
+        .modal-body
+          p Test
+        .modal-footer
+          button.btn.btn-primary(type="button", data-dismiss="modal") Add
