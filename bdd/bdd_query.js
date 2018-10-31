@@ -36,6 +36,32 @@ module.exports.getUsers = async function (user_id) {
     });
 }
 
+module.exports.getlist = async function (user_id) {
+    return new Promise((resolve, reject) => {
+        try {
+            let bdd = new bddClass();
+            let res = [];
+            let list = await bdd.query("SELECT list.id as list_id, list.name as name, list.wanted as wanted FROM users INNER JOIN list on list.user_id = users.id WHERE users.id ='" + user_id + "'");
+            if (list[0]) {
+                list.forEach(element => {
+                    let tmp = { name: element.name, wanted: element.wanted, card_list: [] };
+                    let card_list = await bdd.query("SELECT card.card_id as card_id FROM list INNER JOIN card on card.list_id = list.id WHERE list.id ='" + element.list_id + "'");
+                    if (card_list[0]) {
+                        card_list.forEach(elem => {
+                            tmp.card_list.push(elem.card_id);
+                        })
+                    }
+                    res.push(tmp);
+                });
+            }
+            bdd.close();
+            resolve(res);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+}
+
 module.exports.postUsers = async function (user) {
     return new Promise((resolve, reject) => {
         try {
@@ -54,28 +80,70 @@ module.exports.postUsers = async function (user) {
     });
 }
 
-module.exports.getlist = async function () {
+module.exports.postList = async function (name, user_id, wanted) {
     return new Promise((resolve, reject) => {
         try {
             let bdd = new bddClass();
-            let res = 'omw';
+            await bdd.query("INSERT INTO `list`(`name`, `user_id`, `wanted`) VALUES ('"
+                + name + "','"
+                + user_id + "','"
+                + wanted + "')");
             bdd.close();
-            resolve(res);
+            resolve(true);
         } catch (error) {
             console.log(error);
         }
     });
 }
 
-module.exports.postList = async function () {
+module.exports.postCard = async function (card_id, list_id) {
     return new Promise((resolve, reject) => {
         try {
             let bdd = new bddClass();
-            let res = 'omw';
+            await bdd.query("INSERT INTO `card`(`card_id`, `list_id`) VALUES ('"
+                + card_id + "','"
+                + list_id + "')");
             bdd.close();
-            resolve(res);
+            resolve(true);
         } catch (error) {
             console.log(error);
         }
     });
 }
+
+module.exports.deleteList = async function (list_id) {
+    return new Promise((resolve, reject) => {
+        try {
+            let bdd = new bddClass();
+            let card_list = await bdd.query("SELECT card.id as id FROM list INNER JOIN card on card.list_id = list.id WHERE list.id ='" + list_id + "'");
+            if (card_list[0]) {
+                card_list.forEach(element => {
+                    await bdd.query("DELETE FROM `card` WHERE `id` =" + element.id);
+                })
+            }
+            await bdd.query("DELETE FROM `list` WHERE `id` =" + list_id);
+            bdd.close();
+            resolve(true);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+}
+
+module.exports.deleteCard = async function (card_id, list_id) {
+    return new Promise((resolve, reject) => {
+        try {
+            let bdd = new bddClass();
+            await bdd.query("DELETE FROM `card` WHERE `card_id` = " + card_id + " AND `list_id` = " + list_id);
+            bdd.close();
+            resolve(true);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+}
+
+// SELECT list.id as id, list.name as name, list.wanted as wanted, card.card_id as card FROM users INNER JOIN list on list.user_id = users.id INNER JOIN card on card.list_id = list.id
+
+
+// SELECT card.card_id FROM list INNER JOIN card on card.list_id = list.id
