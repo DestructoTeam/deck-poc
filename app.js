@@ -17,7 +17,6 @@ app.use(bodyParser.urlencoded({
 app.get("/", (req, res) => {
     res.render('sing');
 });
-
 app.use("/list", listing);
 
 app.use("/cards", cards);

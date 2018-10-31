@@ -4,13 +4,8 @@ const R = require('ramda');
 
 const app = module.exports = express();
 
-app.get("/search/:name", (req, res) => {
-    const cards = searchCard(req.params.name);
-    return cards;
-});
-
 const searchCard = (name) => {
-    console.log("searching card ...");
+    console.log("searching card <" + name + "> ...");
     return mtg.card.where({name: name})
         .then(cards => {
             const res = R.map((card) => {
@@ -23,3 +18,10 @@ const searchCard = (name) => {
             return {cards: res};
         });
 };
+
+app.get("/search/:name", (req, res) => {
+    searchCard(req.params.name)
+        .then(cards => {
+            res.send(cards);
+        });
+});

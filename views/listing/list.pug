@@ -2,7 +2,7 @@ extends ../layout
 block script
   link(rel="stylesheet", type="text/css", href="../css/list.css")
   link(rel="stylesheet", type="text/css", href="../css/app.css")
-  script(src="../js/mtg.js")
+  script(src="../js/search-card.js")
 block title
   p= list.name
 block navbar
@@ -31,6 +31,6 @@ block content
         .modal-body
           form#form-add-card.form-control
             div.form-goup.row
-              input.form-control#add-card(type="text", onchange="onChangeSearch()")
+              input.form-control#add-card(type="text", onchange="searchCard(this.value)")
               button.btn.btn-primary(type="submit") Add Card
         .modal-header
