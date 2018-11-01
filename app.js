@@ -15,11 +15,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.use(session({
     secret: 'wololo this a secret',
     resave: false,
     saveUninitialized: true,
-}))
+}));
 
 function isAuthenticated(req, res, next) {
     if (req.session.user_id)
@@ -31,6 +32,7 @@ function isAuthenticated(req, res, next) {
 app.get("/", (req, res) => {
     res.render('sing');
 });
+
 app.use("/list", isAuthenticated, listing);
 
 app.use("/cards", isAuthenticated, cards);
@@ -38,6 +40,7 @@ app.use("/cards", isAuthenticated, cards);
 app.get("/sing", (req, res) => { //login first render
     res.render('sing');
 });
+
 app.post("/sing", async (req, res) => { //login post
     let auth = await bdd.isAuth(req.body.email, req.body.password);
     if (auth.auth) {
@@ -50,9 +53,11 @@ app.post("/sing", async (req, res) => { //login post
         res.render('sing');
     }
 });
+
 app.get("/sung", (req, res) => { //register first render
     res.render('sung');
 });
+
 app.post("/sung", async (req, res) => { //register post
     let v = await bdd.postUsers(req.body);
     if (v.success) {
@@ -63,6 +68,7 @@ app.post("/sung", async (req, res) => { //register post
         res.render('sung');
     }
 });
+
 app.get("/app", isAuthenticated, async (req, res) => {
     let mlist = await bdd.getlist(req.session.user_id);
     console.log(mlist);
@@ -71,9 +77,11 @@ app.get("/app", isAuthenticated, async (req, res) => {
         { lists: mlist }
     );
 });
+
 app.delete("/app", isAuthenticated, async (req, res) => {
     await bdd.deleteList(req.body.listId);
 });
+
 app.get("/profile", isAuthenticated, (req, res) => {
     const profile = bdd.getUsers(req.session.user_id);
     res.render(
@@ -81,8 +89,9 @@ app.get("/profile", isAuthenticated, (req, res) => {
         { profile: profile }
     );
 });
+
 app.post("/profile", isAuthenticated, async (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
     await bdd.updateUsers(req.session.user_id, req.body);
     const profile = bdd.getUsers(req.session.user_id);
     res.render(
@@ -90,6 +99,7 @@ app.post("/profile", isAuthenticated, async (req, res) => {
         { profile: profile }
     );
 });
+
 app.get("/matches", isAuthenticated, (req, res) => {
     const matches = [{ id: 1, name: "Johnny Doe" }, { id: 2, name: "Jane Doe" }];
     res.render(
@@ -97,6 +107,7 @@ app.get("/matches", isAuthenticated, (req, res) => {
         { matches: matches }
     );
 });
+
 app.get("/match", isAuthenticated, (req, res) => {
     const match = { id: 1, name: "Johnny Doe", cards: [{ id: 1, name: "Communion avec la lave", imageUrl: "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=395577&type=card" }], messages: [{ id: 1, who: "You", message: "Hi there !" }, { id: 2, who: "Johnny D.", message: "Hi." }] };
     res.render(
@@ -104,6 +115,7 @@ app.get("/match", isAuthenticated, (req, res) => {
         { match: match }
     );
 });
+
 app.get("*", (req, res) => {
     res.redirect('/app');
 });
