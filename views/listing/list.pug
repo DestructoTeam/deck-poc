@@ -2,6 +2,8 @@ extends ../layout
 block script
   link(rel="stylesheet", type="text/css", href="../css/list.css")
   link(rel="stylesheet", type="text/css", href="../css/app.css")
+  link(rel="stylesheet", type="text/css", href="../css/circle-button.css")
+  link(rel="stylesheet", type="text/css", href="../css/all.css")
   script(src="../js/search-card.js")
 block title
   p= list.name
@@ -29,8 +31,11 @@ block content
           button.close(type="button", data-dismiss="modal", aria-label="Close")
             span(aria-hidden="true") &times;
         .modal-body
-          form#form-add-card.form-control
+          form
             div.form-goup.row
-              input.form-control#add-card(type="text", onchange="searchCard(this.value)")
-              button.btn.btn-primary(type="submit") Add Card
-        .modal-header
+              label.col-md-2.col-form-label(for="inputSearch") Search
+              .col-md-10
+                input.form-control#inputSearch(placeholder="E.g: squee", type="text", onkeyup="searchCard(this.value)")
+            div.form-goup.row
+              div#ourContainer
+        .modal-footer
