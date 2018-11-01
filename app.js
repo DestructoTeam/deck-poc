@@ -20,12 +20,19 @@ app.use(session({
     saveUninitialized: true,
 }))
 
+function isAuthenticated(req, res, next) {
+    if (req.session.user_id)
+        return next();
+
+    res.redirect('/');
+}
+
 app.get("/", (req, res) => {
     res.render('sing');
 });
-app.use("/list", listing);
+app.use("/list", isAuthenticated, listing);
 
-app.use("/cards", cards);
+app.use("/cards", isAuthenticated, cards);
 
 app.get("/sing", (req, res) => { //login first render
     res.render('sing');
@@ -37,10 +44,7 @@ app.post("/sing", async (req, res) => { //login post
         req.session.user_name = auth.username;
         let mlist = await bdd.getlist(auth.id);
         console.log(mlist);
-        res.render(
-            'app',
-            { lists: mlist }
-        );
+        res.redirect('/app');
     } else {
         res.render('sing');
     }
@@ -53,52 +57,46 @@ app.post("/sung", async (req, res) => { //register post
     if (v.success) {
         req.session.user_id = v.id;
         req.session.user_name = req.body.name;
-        res.render(
-            'app',
-            { lists: [] }
-        );
+        res.redirect('/app');
     } else {
         res.render('sung');
     }
 });
-app.get("/app", async (req, res) => {
-    console.log("haha!", req.session.user_id, req.session.user_name);
-    if (req.session.user_id) {
-        let mlist = await bdd.getlist(req.session.user_id);
-        console.log(mlist);
-        res.render(
-            'app',
-            { lists: mlist }
-        );
-    } else {
-        res.render('sing');
-    }
+app.get("/app", isAuthenticated, async (req, res) => {
+    let mlist = await bdd.getlist(req.session.user_id);
+    console.log(mlist);
+    res.render(
+        'app',
+        { lists: mlist }
+    );
 });
-app.get("/profile", (req, res) => {
-    if (req.session.user_id) {
-        const profile = bdd.getUsers(req.session.user_id);
-        res.render(
-            'profile',
-            { profile: profile }
-        );
-    } else {
-        res.render('sing');
-    }
+app.get("/profile", isAuthenticated, (req, res) => {
+    const profile = bdd.getUsers(req.session.user_id);
+    res.render(
+        'profile',
+        { profile: profile }
+    );
 });
-app.get("/matches", (req, res) => {
+app.get("/matches", isAuthenticated, (req, res) => {
     const matches = [{ id: 1, name: "Johnny Doe" }, { id: 2, name: "Jane Doe" }];
     res.render(
         'matches',
         { matches: matches }
     );
 });
-app.get("/match", (req, res) => {
+app.get("/match", isAuthenticated, (req, res) => {
     const match = { id: 1, name: "Johnny Doe", cards: [{ id: 1, name: "Communion avec la lave", imageUrl: "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=395577&type=card" }], messages: [{ id: 1, who: "You", message: "Hi there !" }, { id: 2, who: "Johnny D.", message: "Hi." }] };
     res.render(
         'match',
         { match: match }
     );
 });
+app.get("*", (req, res) => {
+    res.redirect('/');
+});
 
+app.post("*", (req, res) => {
+    res.redirect('/');
+});
 
 app.listen("8000");
