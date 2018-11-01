@@ -4,7 +4,7 @@ module.exports = class Database {
         this.connection = mysql.createConnection({
             host: 'localhost',
             user: 'root',
-            password: '',
+            password: 'root',
             database: 'destru'
         });
     }

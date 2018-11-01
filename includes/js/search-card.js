@@ -47,7 +47,12 @@ function searchCard(name) {
 function addCard(id) {
     const rgx = /[^/]+$/;
     var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.reponse);
+        }
+    };
     xhttp.open("POST", '/list/' + rgx.exec(document.URL), true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("id=" + id);
+    xhttp.send("id=" + id + "&list=" + rgx.exec(document.URL));
 }

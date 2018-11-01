@@ -1,4 +1,5 @@
 const express = require("express");
+const bdd = require("../../bdd/bdd_query.js");
 
 const app = module.exports = express();
 
@@ -19,4 +20,11 @@ app.get("/:id", (req, res) => {
         'listing/list',
         {list: list}
     );
+});
+
+app.post("/:id", (req, res) => {
+    console.log(req.body.id);
+    console.log(req.body.list);
+    bdd.postCard(req.body.id, req.body.list);
+    //res.send(req.body.id);
 });
