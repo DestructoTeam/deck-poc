@@ -46,7 +46,6 @@ module.exports.getlist = function (user_id, list_id = "nope") {
             let bdd = new bddClass();
             let res = [];
             let list = [];
-            console.log(list_id);
             if (list_id == "nope") {
                 list = await bdd.query("SELECT list.id as list_id, list.name as name, list.wanted as wanted FROM users INNER JOIN list on list.user_id = users.id WHERE users.id ='" + user_id + "'");
             } else {
@@ -175,7 +174,7 @@ module.exports.deleteCard = function (card_id, list_id) {
     return new Promise(async (resolve, reject) => {
         try {
             let bdd = new bddClass();
-            await bdd.query("DELETE FROM `card` WHERE `card_id` = " + card_id + " AND `list_id` = " + list_id);
+            await bdd.query("DELETE FROM `card` WHERE `card_id` = " + card_id + " AND `list_id` = " + list_id + " LIMIT 1");
             bdd.close();
             resolve(true);
         } catch (error) {

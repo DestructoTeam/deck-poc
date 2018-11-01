@@ -47,8 +47,7 @@ app.post("/sing", async (req, res) => { //login post
         req.session.user_id = auth.id;
         req.session.user_name = auth.username;
         let mlist = await bdd.getlist(auth.id);
-        console.log(mlist);
-        res.redirect('/list');
+        res.redirect('/app');
     } else {
         res.render('sing');
     }
@@ -63,20 +62,51 @@ app.post("/sung", async (req, res) => { //register post
     if (v.success) {
         req.session.user_id = v.id;
         req.session.user_name = req.body.name;
-        res.redirect('/list');
+        res.redirect('/app');
     } else {
         res.render('sung');
     }
 });
 
-app.get("/profile", isAuthenticated, (req, res) => {
-    const profile = bdd.getUsers(req.session.user_id);
+app.get("/app", isAuthenticated, async (req, res) => {
+    let mlist = await bdd.getlist(req.session.user_id);
+    res.render(
+        'app',
+        { lists: mlist }
+    );
+});
+app.delete("/app", isAuthenticated, async (req, res) => {
+    await bdd.deleteList(req.body.listId);
+});
+app.get("/user", isAuthenticated, async (req, res) => {
+    const profile = await bdd.getUsers(req.session.user_id);
+    let owned = true
     res.render(
         'profile',
+        { profile: profile[0], owned: owned }
+    );
+});
+app.get("/user/:id", isAuthenticated, async (req, res) => {
+    const profile = await bdd.getUsers(req.params.id);
+    let owned = false
+    if (req.params.id == req.session.user_id)
+        owned = true
+    res.render(
+        'profile',
+        { profile: profile[0], owned: owned }
+    );
+});
+app.get("/profiledit", isAuthenticated, async (req, res) => {
+    const profile = await bdd.getUsers(req.session.user_id);
+    res.render(
+        'profiledit',
         { profile: profile }
     );
 });
-
+app.post("/profiledit", isAuthenticated, async (req, res) => {
+    await bdd.updateUsers(req.session.user_id, req.body);
+    res.redirect('/profile');
+});
 app.get("/matches", isAuthenticated, (req, res) => {
     const matches = [{ id: 1, name: "Johnny Doe" }, { id: 2, name: "Jane Doe" }];
     res.render(
