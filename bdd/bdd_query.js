@@ -121,12 +121,12 @@ module.exports.postList = function (name, user_id, wanted) {
     return new Promise(async (resolve, reject) => {
         try {
             let bdd = new bddClass();
-            await bdd.query("INSERT INTO `list`(`name`, `user_id`, `wanted`) VALUES ('"
+            let sql = await bdd.query("INSERT INTO `list`(`name`, `user_id`, `wanted`) VALUES ('"
                 + name + "','"
                 + user_id + "','"
                 + wanted + "')");
             bdd.close();
-            resolve(true);
+            resolve({ success: true, list_id: sql.insertId });
         } catch (error) {
             console.log(error);
             reject(false);
