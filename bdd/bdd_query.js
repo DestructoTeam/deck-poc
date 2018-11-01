@@ -26,10 +26,10 @@ module.exports.getUsers = function (user_id) {
             let bdd = new bddClass();
             let res = [];
             if (typeof user_id === 'undefined') {
-                res = await bdd.query("SELECT `id`, `email`, `username`, `phone` FROM `users`");
+                res = await bdd.query("SELECT `id`, `email`, `username` as name, `phone` FROM `users`");
             }
             else {
-                res = await bdd.query("SELECT `id`, `email`, `username`, `phone` FROM `users` WHERE `id` ='" + user_id + "'");
+                res = await bdd.query("SELECT `id`, `email`, `username` as name, `phone` FROM `users` WHERE `id` ='" + user_id + "'");
             }
             bdd.close();
             resolve(res);
@@ -72,15 +72,18 @@ module.exports.getlist = function (user_id) {
 module.exports.postUsers = function (user) {
     return new Promise(async (resolve, reject) => {
         try {
+            console.log(":)", user, user.name);
             let bdd = new bddClass();
-            pwd = await bcrypt.hash(user.password, 13);
-            await bdd.query("INSERT INTO `users`(`email`, `username`, `password`, `phone`) VALUES ('"
+            let pwd = await bcrypt.hash(user.password, 13);
+            console.log('>:( ', pwd);
+            let sql = await bdd.query("INSERT INTO `users`(`email`, `username`, `password`, `phone`) VALUES ('"
                 + user.email + "','"
-                + user.username + "','"
-                + pwd + "','"
-                + user.phone + "')");
+                + user.name + "','"
+                + pwd + "','NULL')");
+            // + typeof user.phone == undefined ? 'NULL' : user.phone + "')");
             bdd.close();
-            resolve(true);
+            console.log("sql", sql);
+            resolve({ success: true, user_id: sql.insertId });
         } catch (error) {
             console.log(error);
             reject(false);
