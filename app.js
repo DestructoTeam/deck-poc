@@ -75,11 +75,15 @@ app.get("/app", async (req, res) => {
     }
 });
 app.get("/profile", (req, res) => {
-    const profile = bdd.getUsers(req.session.user_id);
-    res.render(
-        'profile',
-        { profile: profile }
-    );
+    if (req.session.user_id) {
+        const profile = bdd.getUsers(req.session.user_id);
+        res.render(
+            'profile',
+            { profile: profile }
+        );
+    } else {
+        res.render('sing');
+    }
 });
 app.get("/matches", (req, res) => {
     const matches = [{ id: 1, name: "Johnny Doe" }, { id: 2, name: "Jane Doe" }];
