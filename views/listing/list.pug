@@ -5,6 +5,7 @@ block script
   link(rel="stylesheet", type="text/css", href="../css/circle-button.css")
   link(rel="stylesheet", type="text/css", href="../css/all.css")
   script(src="../js/search-card.js")
+  script(src="../js/remove-card.js")
 block title
   p= list.name
 block navbar
@@ -12,10 +13,10 @@ block navbar
 block content
   ul#cardList
     each card, index in list.cards
-      .row.row-list
+      .row.row-list(id="card" + card.cardId)
         .row.col-md-12
           p.offset-md-1.col-md-9(style="font-size:3rem;")= card.name
-          button.close.col-md-2(type="button", aria-label="Close")
+          button.close.col-md-2(type="button", aria-label="Close", onclick="removeCard(" + card.cardId + ", " + listId + ");")
             span(aria-hidden="true") &times;
         .row.col-md-8
           img.rounded.mx-auto.d-block(style="margin-top:30px; margin-bottom:30px;", src=card.imageUrl)

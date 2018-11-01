@@ -1,9 +1,7 @@
-function removeCard(cardid, listid) {
+function removeCard(cardId, listId) {
     var xhttp = new XMLHttpRequest();
     xhttp.open("DELETE", "/cards", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("cardId=" + cardid);
-    xhttp.send("listId=" + listid);
-    document.getElementById("card" + id).remove();
-  }
-  
+    xhttp.send("cardId=" + cardId + "&listId=" + listId);
+    document.getElementById("card" + cardId).remove();
+}
