@@ -20,4 +20,7 @@ block content
     div.form-group
       label(for='pw2', style="font-size:3.5rem;") Confirm new password:
       input#pw2.form-control.row-list(type='password' name='confirmPassword', style="font-size:2rem;padding:2.375rem .75rem;")
-    button(type= "button", class="btn btn-circle btn-xl") &gt;
+    div.form-group
+      label(for='phone', style="font-size:3.5rem;") Change phone number:
+      input#phone.form-control.row-list(type='number', name='phone', value=profile.phone, style="font-size:2rem;padding:2.375rem .75rem;")
+    button(type="submit", class="btn btn-circle btn-xl") &gt;
