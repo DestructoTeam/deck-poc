@@ -48,7 +48,7 @@ app.post("/sing", async (req, res) => { //login post
         req.session.user_name = auth.username;
         let mlist = await bdd.getlist(auth.id);
         console.log(mlist);
-        res.redirect('/app');
+        res.redirect('/list');
     } else {
         res.render('sing');
     }
@@ -63,19 +63,10 @@ app.post("/sung", async (req, res) => { //register post
     if (v.success) {
         req.session.user_id = v.id;
         req.session.user_name = req.body.name;
-        res.redirect('/app');
+        res.redirect('/list');
     } else {
         res.render('sung');
     }
-});
-
-app.get("/app", isAuthenticated, async (req, res) => {
-    let mlist = await bdd.getlist(req.session.user_id);
-    console.log(mlist);
-    res.render(
-        'app',
-        { lists: mlist }
-    );
 });
 
 app.delete("/app", isAuthenticated, async (req, res) => {
@@ -83,16 +74,6 @@ app.delete("/app", isAuthenticated, async (req, res) => {
 });
 
 app.get("/profile", isAuthenticated, (req, res) => {
-    const profile = bdd.getUsers(req.session.user_id);
-    res.render(
-        'profile',
-        { profile: profile }
-    );
-});
-
-app.post("/profile", isAuthenticated, async (req, res) => {
-    console.log(req.body);
-    await bdd.updateUsers(req.session.user_id, req.body);
     const profile = bdd.getUsers(req.session.user_id);
     res.render(
         'profile',
