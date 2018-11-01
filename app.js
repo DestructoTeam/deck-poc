@@ -4,7 +4,7 @@ const listing = require("./src/listing/route");
 const cards = require("./src/cards/route.js");
 const bodyParser = require("body-parser");
 const bdd = require("./bdd/bdd_query");
-var session = require('express-session');
+const session = require('express-session');
 
 const app = express();
 
@@ -15,10 +15,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.use(session({
     secret: 'wololo this a secret',
+    resave: false,
     saveUninitialized: true,
-}))
+}));
 
 function isAuthenticated(req, res, next) {
     if (req.session.user_id)
@@ -30,6 +32,7 @@ function isAuthenticated(req, res, next) {
 app.get("/", (req, res) => {
     res.render('sing');
 });
+
 app.use("/list", isAuthenticated, listing);
 
 app.use("/cards", isAuthenticated, cards);
@@ -66,6 +69,10 @@ app.post("/sung", async (req, res) => { //register post
     }
 });
 
+app.delete("/app", isAuthenticated, async (req, res) => {
+    await bdd.deleteList(req.body.listId);
+});
+
 app.get("/profile", isAuthenticated, (req, res) => {
     const profile = bdd.getUsers(req.session.user_id);
     res.render(
@@ -91,11 +98,11 @@ app.get("/match", isAuthenticated, (req, res) => {
 });
 
 app.get("*", (req, res) => {
-    res.redirect('/');
+    res.redirect('/app');
 });
 
 app.post("*", (req, res) => {
-    res.redirect('/');
+    res.redirect('/app');
 });
 
 app.listen("8000");

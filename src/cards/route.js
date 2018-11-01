@@ -1,4 +1,5 @@
 const express = require("express");
+const bdd = require("../../bdd/bdd_query");
 const mtg = require("mtgsdk");
 const R = require('ramda');
 
@@ -24,4 +25,8 @@ app.get("/search/:name", (req, res) => {
         .then(cards => {
             res.send(cards);
         });
+});
+
+app.delete("/", async (req, res) => {
+    await bdd.deleteCard(req.body.cardId, req.body.listId);
 });

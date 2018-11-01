@@ -40,12 +40,18 @@ module.exports.getUsers = function (user_id) {
     });
 }
 
-module.exports.getlist = function (user_id) {
+module.exports.getlist = function (user_id, list_id = "nope") {
     return new Promise(async (resolve, reject) => {
         try {
             let bdd = new bddClass();
             let res = [];
-            let list = await bdd.query("SELECT list.id as list_id, list.name as name, list.wanted as wanted FROM users INNER JOIN list on list.user_id = users.id WHERE users.id ='" + user_id + "'");
+            let list = [];
+            console.log(list_id);
+            if (list_id == "nope") {
+                list = await bdd.query("SELECT list.id as list_id, list.name as name, list.wanted as wanted FROM users INNER JOIN list on list.user_id = users.id WHERE users.id ='" + user_id + "'");
+            } else {
+                list = await bdd.query("SELECT list.id as list_id, list.name as name, list.wanted as wanted FROM users INNER JOIN list on list.user_id = users.id WHERE users.id ='" + user_id + "' AND list.id = '" + list_id + "'");
+            }
             if (list[0]) {
                 for (let i = 0; i < list.length; i++) {
                     const element = list[i];
@@ -68,21 +74,41 @@ module.exports.getlist = function (user_id) {
     });
 }
 
+module.exports.updateUsers = function (id, user) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let bdd = new bddClass();
+            if (user.name !== '')
+                await bdd.query("UPDATE `users` SET `username`='" + user.name + "' WHERE id = " + id);
+            if (user.password !== '') {
+                let pwd = await bcrypt.hash(user.password, 13);
+                await bdd.query("UPDATE `users` SET `password`='" + pwd + "' WHERE id = " + id);
+            }
+            if (user.email !== '')
+                await bdd.query("UPDATE `users` SET `email`='" + user.email + "' WHERE id = " + id);
+            if (user.phone !== '')
+                await bdd.query("UPDATE `users` SET `phone`='" + user.phone + "' WHERE id = " + id);
+            bdd.close();
+            resolve({ success: true });
+        } catch (error) {
+            console.log(error);
+            reject(false);
+        }
+    });
+}
+
 // { email: 'h', username: 'h', password: 'h', phone: '0123456789' }
 module.exports.postUsers = function (user) {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(":)", user, user.name);
             let bdd = new bddClass();
             let pwd = await bcrypt.hash(user.password, 13);
-            console.log('>:( ', pwd);
             let sql = await bdd.query("INSERT INTO `users`(`email`, `username`, `password`, `phone`) VALUES ('"
                 + user.email + "','"
                 + user.name + "','"
                 + pwd + "','NULL')");
             // + typeof user.phone == undefined ? 'NULL' : user.phone + "')");
             bdd.close();
-            console.log("sql", sql);
             resolve({ success: true, user_id: sql.insertId });
         } catch (error) {
             console.log(error);
@@ -95,12 +121,12 @@ module.exports.postList = function (name, user_id, wanted) {
     return new Promise(async (resolve, reject) => {
         try {
             let bdd = new bddClass();
-            await bdd.query("INSERT INTO `list`(`name`, `user_id`, `wanted`) VALUES ('"
+            let sql = await bdd.query("INSERT INTO `list`(`name`, `user_id`, `wanted`) VALUES ('"
                 + name + "','"
                 + user_id + "','"
                 + wanted + "')");
             bdd.close();
-            resolve(true);
+            resolve({ success: true, list_id: sql.insertId });
         } catch (error) {
             console.log(error);
             reject(false);
