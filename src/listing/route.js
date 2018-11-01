@@ -23,6 +23,10 @@ app.post("/:id", (req, res) => {
     bdd.postCard(req.body.id, req.body.list);
 });
 
+app.delete("/", async (req, res) => {
+    await bdd.deleteList(req.body.listId);
+});
+
 app.post("/", (req, res) => {
     bdd.postList(req.body.name,
                  req.session.user_id,
