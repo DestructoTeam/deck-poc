@@ -4,7 +4,7 @@ const listing = require("./src/listing/route");
 const cards = require("./src/cards/route.js");
 const bodyParser = require("body-parser");
 const bdd = require("./bdd/bdd_query");
-var session = require('express-session');
+const session = require('express-session');
 
 const app = express();
 
@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(session({
     secret: 'wololo this a secret',
+    resave: false,
     saveUninitialized: true,
 }))
 
@@ -77,6 +78,14 @@ app.get("/profile", isAuthenticated, (req, res) => {
         { profile: profile }
     );
 });
+app.post("/profile", isAuthenticated, (req, res) => {
+    console.log(req.body)
+    // bdd.updateUsers(req.session.user_id, req.body);
+    res.render(
+        'profile',
+        { profile: profile }
+    );
+});
 app.get("/matches", isAuthenticated, (req, res) => {
     const matches = [{ id: 1, name: "Johnny Doe" }, { id: 2, name: "Jane Doe" }];
     res.render(
@@ -92,11 +101,11 @@ app.get("/match", isAuthenticated, (req, res) => {
     );
 });
 app.get("*", (req, res) => {
-    res.redirect('/');
+    res.redirect('/app');
 });
 
 app.post("*", (req, res) => {
-    res.redirect('/');
+    res.redirect('/app');
 });
 
 app.listen("8000");
