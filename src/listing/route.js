@@ -18,3 +18,10 @@ app.get("/:id", async (req, res) => {
         { list: mlist[0] }
     );
 });
+
+app.post("/:id", (req, res) => {
+    console.log(req.body.id);
+    console.log(req.body.list);
+    bdd.postCard(req.body.id, req.body.list);
+    //res.send(req.body.id);
+});

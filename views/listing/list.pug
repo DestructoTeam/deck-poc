@@ -10,7 +10,7 @@ block title
 block navbar
   include ../nav
 block content
-  ul
+  ul#cardList
     each card, index in list.cards
       .row.row-list
         .row.col-md-12
@@ -28,14 +28,14 @@ block content
     .modal-dialog.modal-dialog-centered.modal-lg(role="document")
       .modal-content
         .modal-header
+          p#exampleModalLongTitle.modal-title(style="font-size:4rem;") Add a card
           button.close(type="button", data-dismiss="modal", aria-label="Close")
             span(aria-hidden="true") &times;
         .modal-body
-          form
+          form(style="margin-bottom:0;")
             div.form-goup.row
-              label.col-md-2.col-form-label(for="inputSearch") Search
-              .col-md-10
+              label.col-md-4.col-form-label#labelSearch(for="inputSearch") Search
+              .col-md-8
                 input.form-control#inputSearch(placeholder="E.g: squee", type="text", onkeyup="searchCard(this.value)")
-            div.form-goup.row
-              div#ourContainer
+            div.form-goup#ourContainer
         .modal-footer
