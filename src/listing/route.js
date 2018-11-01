@@ -10,17 +10,17 @@ app.get("/:id", async (req, res) => {
     for (let i = 0; i < mlist[0].card_list.length; i++) {
         const element = mlist[0].card_list[i];
         let tmpcard = await mtg.card.find(element);
-        mlist[0].cards.push({ name: tmpcard.card.name, imageUrl: tmpcard.card.imageUrl });
+        mlist[0].cards.push({ name: tmpcard.card.name, imageUrl: tmpcard.card.imageUrl, cardId: element });
     }
 
     res.render(
         'listing/list',
-        { list: mlist[0] }
+        { listId: req.params.id, list: mlist[0] }
     );
 });
 
-app.post("/:id", (req, res) => {
-    bdd.postCard(req.body.id, req.body.list);
+app.post("/:id", async (req, res) => {
+    await bdd.postCard(req.body.id, req.body.list);
 });
 
 app.delete("/", async (req, res) => {

@@ -75,6 +75,7 @@ function addCard(id, url, name) {
 
     buttonDiv.setAttribute('class', "close col-md-2");
     buttonDiv.setAttribute('type', "button");
+    buttonDiv.setAttribute('onclick', "removeCard("+ id +", " + rgx.exec(document.URL) + ");");
     buttonDiv.setAttribute('aria-label', "Close");
 
     closeDiv.setAttribute('aria-hidden', "true");
@@ -96,6 +97,7 @@ function addCard(id, url, name) {
     rowText.appendChild(textDiv);
 
     row.setAttribute('class', "row row-list");
+    row.setAttribute('id', "card" + id);
     rowName.setAttribute('class', "row col-md-12");
     rowUrl.setAttribute('class', "row col-md-8");
     rowText.setAttribute('class', "row col-md-4");
