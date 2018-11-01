@@ -81,9 +81,10 @@ app.get("/profile", isAuthenticated, (req, res) => {
         { profile: profile }
     );
 });
-app.post("/profile", isAuthenticated, (req, res) => {
+app.post("/profile", isAuthenticated, async (req, res) => {
     console.log(req.body)
-    // bdd.updateUsers(req.session.user_id, req.body);
+    await bdd.updateUsers(req.session.user_id, req.body);
+    const profile = bdd.getUsers(req.session.user_id);
     res.render(
         'profile',
         { profile: profile }
