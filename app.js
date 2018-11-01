@@ -71,6 +71,9 @@ app.get("/app", isAuthenticated, async (req, res) => {
         { lists: mlist }
     );
 });
+app.delete("/app", isAuthenticated, async (req, res) => {
+    await bdd.deleteList(req.body.listId);
+});
 app.get("/profile", isAuthenticated, (req, res) => {
     const profile = bdd.getUsers(req.session.user_id);
     res.render(
