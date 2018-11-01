@@ -23,8 +23,29 @@ app.get("/:id", (req, res) => {
 });
 
 app.post("/:id", (req, res) => {
-    console.log(req.body.id);
-    console.log(req.body.list);
     bdd.postCard(req.body.id, req.body.list);
-    //res.send(req.body.id);
 });
+
+app.post("/", (req, res) => {
+    bdd.postList(req.body.name,
+                 req.session.user_id,
+                 checkIndex(req.body, "wanted"))
+        .then(({success, list_id}) => {
+            res.redirect('/list/' + list_id);
+        });
+});
+
+app.get("/", async (req, res) => {
+    let mlist = await bdd.getlist(req.session.user_id);
+    res.render(
+        'app',
+        { lists: mlist }
+    );
+});
+
+const checkIndex = (obj, val) => {
+    if (obj.val)
+        return 1;
+    else
+        return 0;
+};

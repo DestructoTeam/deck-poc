@@ -37,6 +37,7 @@ app.use("/cards", isAuthenticated, cards);
 app.get("/sing", (req, res) => { //login first render
     res.render('sing');
 });
+
 app.post("/sing", async (req, res) => { //login post
     let auth = await bdd.isAuth(req.body.email, req.body.password);
     if (auth.auth) {
@@ -44,32 +45,27 @@ app.post("/sing", async (req, res) => { //login post
         req.session.user_name = auth.username;
         let mlist = await bdd.getlist(auth.id);
         console.log(mlist);
-        res.redirect('/app');
+        res.redirect('/list');
     } else {
         res.render('sing');
     }
 });
+
 app.get("/sung", (req, res) => { //register first render
     res.render('sung');
 });
+
 app.post("/sung", async (req, res) => { //register post
     let v = await bdd.postUsers(req.body);
     if (v.success) {
         req.session.user_id = v.id;
         req.session.user_name = req.body.name;
-        res.redirect('/app');
+        res.redirect('/list');
     } else {
         res.render('sung');
     }
 });
-app.get("/app", isAuthenticated, async (req, res) => {
-    let mlist = await bdd.getlist(req.session.user_id);
-    console.log(mlist);
-    res.render(
-        'app',
-        { lists: mlist }
-    );
-});
+
 app.get("/profile", isAuthenticated, (req, res) => {
     const profile = bdd.getUsers(req.session.user_id);
     res.render(
@@ -77,6 +73,7 @@ app.get("/profile", isAuthenticated, (req, res) => {
         { profile: profile }
     );
 });
+
 app.get("/matches", isAuthenticated, (req, res) => {
     const matches = [{ id: 1, name: "Johnny Doe" }, { id: 2, name: "Jane Doe" }];
     res.render(
@@ -84,6 +81,7 @@ app.get("/matches", isAuthenticated, (req, res) => {
         { matches: matches }
     );
 });
+
 app.get("/match", isAuthenticated, (req, res) => {
     const match = { id: 1, name: "Johnny Doe", cards: [{ id: 1, name: "Communion avec la lave", imageUrl: "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=395577&type=card" }], messages: [{ id: 1, who: "You", message: "Hi there !" }, { id: 2, who: "Johnny D.", message: "Hi." }] };
     res.render(
@@ -91,6 +89,7 @@ app.get("/match", isAuthenticated, (req, res) => {
         { match: match }
     );
 });
+
 app.get("*", (req, res) => {
     res.redirect('/');
 });
