@@ -6,19 +6,19 @@ block navbar
   include nav
 block content
   form(method='POST' action='/profiledit')
-    div.form-group
-      label(for='name', style="font-size:3.5rem;") Change name:
-      input#name.form-control.row-list(type='text', name='name', value=profile.name, style="font-size:2rem;padding:2.375rem .75rem;")
-    div.form-group
-      label(for='email', style="font-size:3.5rem;") Change email:
-      input#email.form-control.row-list(type='email', name='email', value=profile.email, style="font-size:2rem;padding:2.375rem .75rem;")
-    div.form-group
-      label(for='pw', style="font-size:3.5rem;") New password:
-      input#pw.form-control.row-list(type='password' name='password', style="font-size:2rem;padding:2.375rem .75rem;")
-    div.form-group
-      label(for='pw2', style="font-size:3.5rem;") Confirm new password:
-      input#pw2.form-control.row-list(type='password' name='confirmPassword', style="font-size:2rem;padding:2.375rem .75rem;")
-    div.form-group
-      label(for='phone', style="font-size:3.5rem;") Change phone number:
-      input#phone.form-control.row-list(type='number', name='phone', value=profile.phone, style="font-size:2rem;padding:2.375rem .75rem;")
-    button(type="submit", class="btn btn-circle btn-xl") &gt;
+    div
+      label Change name:
+      input(type='text', name='name', value=profile.name)
+    div
+      label Change email:
+      input(type='email', name='email', value=profile.email)
+    div
+      label New password:
+      input(type='password' name='password')
+    div
+      label Confirm new password:
+      input(type='password' name='confirmPassword')
+    div
+      label Change phone number:
+      input(type='number', name='phone', value=profile.phone)
+    button(type="submit") &gt;

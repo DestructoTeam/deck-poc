@@ -4,11 +4,10 @@ block title
   p Sign In
 block content
   form(method='POST' action='/sing')
-    div.form-group
-      label(for='email', style="font-size:3.5rem;") Email:
-      input#email.form-control.row-list(type='email', placeholder='name@email.com', name='email', style="font-size:2rem;padding:2.375rem .75rem;")
-    div.form-group
-      label(for='pw', style="font-size:3.5rem;") Password:
-      input#pw.form-control.row-list(type='password', name='password', style="font-size:2rem;padding:2.375rem .75rem;")
-    br
-    button.btn.btn-primary(type='submit', style="font-size:2rem;") Sign In
+    div
+      label Email:
+      input(type='email', placeholder='name@email.com', name='email')
+    div
+      label Password:
+      input(type='password', name='password')
+    button(type='submit') Sign In

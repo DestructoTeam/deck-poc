@@ -1,7 +1,7 @@
 html
   head
     title= "deck-poc"
-    link(href="include/assets/css/material-kit.css?v=2.0.4", rel="stylesheet")
+    link(href="assets/css/material-kit.css?v=2.0.4", rel="stylesheet")
     script(src="assets/js/core/jquery.min.js", type="text/javascript")
     script(src="assets/js/core/popper.min.js", type="text/javascript")
     script(src="assets/js/core/bootstrap-material-design.min.js", type="text/javascript")
@@ -15,9 +15,5 @@ html
     block script
   body
     block navbar
-    .jumbotron.vertical-center.other
-      .main.container
-        div.display-2
-          block title
-          br
-          block content
+    block title
+    block content

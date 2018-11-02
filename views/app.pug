@@ -8,29 +8,19 @@ block title
 block content
   ul
     each list, index in lists
-      .row.row-list(id='list' + list.id)
-        a.offset-md-1.col-md-9(href='list/' + list.id)= list.name
-        button.close.col-md-2.remove-list(type="button", aria-label="Close", data-id=list.id, onclick="removeList(" + list.id + ");")
-          span(aria-hidden="true") &times;
+      div(id='list' + list.id)
+        a(href='list/' + list.id)= list.name
+        button(type="button", onclick="removeList(" + list.id + ");")
+          span &times;
     else
       p No list.
-    button.btn.btn-circle.btn-xl(type= "button", data-toggle="modal", data-target="#exampleModalCenter") +
-  #exampleModalCenter.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalCenterTitle", aria-hidden="true")
-    .modal-dialog.modal-dialog-centered.modal-lg(role="document")
-      .modal-content
-        .modal-header
-          p#exampleModalLongTitle.modal-title Add a list
-          button.close(type="button", data-dismiss="modal", aria-label="Close")
-            span(aria-hidden="true") &times;
-        .modal-body
-          form(style="margin-bottom:0;", method="POST", action="/list")
-            div.form-group.row
-              label.col-md-8.col-md-4.col-form-label#labelName(for="listName") List Name
-                input.form-control#listName(required, placeholder="E.g: My new modern", type="text", name="name")
-            div.form-group.row
-              label.col-md-4.col-form-label#labelWanted(for="listWanted") Searching/Giving
-                input.form-control(data-toggle="toggle", type="checkbox", name="wanted")
-            div.form-group.row
-              input.form-control(type="submit")
-        .modal-footer
-          button.btn.btn-primary(type="button", data-dismiss="modal") Add
+    button(type= "button") +
+    p Add a list
+    button(type="button")
+      span(aria-hidden="true") &times;
+    form(style="margin-bottom:0;", method="POST", action="/list")
+      label List Name
+      input(required, placeholder="E.g: My new modern", type="text", name="name")
+      label Searching/Giving
+      input(type="checkbox", name="wanted")
+      input(type="submit")
