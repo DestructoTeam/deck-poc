@@ -1,14 +1,15 @@
 extends layout
 block script
-  link(rel="stylesheet", type="text/css", href="profile.css")
-  link(rel="stylesheet", type="text/css", href="app.css")
+  link(rel="stylesheet", type="text/css", href="css/profile.css")
+  link(rel="stylesheet", type="text/css", href="css/app.css")
 block title
   p Your Profile
 block navbar
   include nav
 block content
-  p= profile.name
-  p= profile.email
-  p= profile.phone
+  p(style="font-size:3.5rem;")= profile.name
+  p(style="font-size:2.5rem;")= profile.email
+  p(style="font-size:2.5rem;")= profile.phone
+  br
   if owned
-    a(href="/profiledit"): button.btn.btn-primary(type='button', style="font-size:2rem;") modify profil >
+    a.btn.btn-primary(href="/profiledit", style="font-size:2rem;") Modify profil

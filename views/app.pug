@@ -29,12 +29,12 @@ block content
         .modal-body
           form(style="margin-bottom:0;", method="POST", action="/list")
             div.form-group.row
-              label.col-md-8.col-md-4.col-form-label#labelName(for="listName") List Name
+              label.col-md-6.col-form-label#labelName(for="listName") List Name
+              .col-md-6
                 input.form-control#listName(required, placeholder="E.g: My new modern", type="text", name="name")
             div.form-group.row
-              label.col-md-4.col-form-label#labelWanted(for="listWanted") Searching/Giving
+              label.col-md-8.col-form-label#labelName(for="listWanted") Searching/Giving
+              .col-md-4
                 input.form-control(data-toggle="toggle", type="checkbox", name="wanted")
-            div.form-group.row
-              input.form-control(type="submit")
         .modal-footer
-          button.btn.btn-primary(type="button", data-dismiss="modal") Add
+          button.btn.btn-primary(type="submit", data-dismiss="modal") Add
