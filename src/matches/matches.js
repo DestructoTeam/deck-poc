@@ -48,13 +48,10 @@ app.get("/:id", async (req, res) => {
             }
         }
     }
-    console.log(req.params.id);
     let usrcard = await bdd.getlist(req.session.user_id, req.params.id);
-    console.log("us", usrcard[0]);
     let finaluserlist = [];
     if (usrcard[0]) {
         let oklist = await matching_check.matchUser(usrcard[0], userlist);
-        console.log("ok", oklist);
         for (let i = 0; i < oklist.length; i++) {
             let tmp = await bdd.getUsersbylistid(oklist[i].id)
             if (tmp[0] && !(tmp[0] in finaluserlist)){
@@ -62,8 +59,6 @@ app.get("/:id", async (req, res) => {
             }
         }
     }
-
-    console.log("final", finaluserlist);
     res.render(
         'matches',
         { matches: finaluserlist }
