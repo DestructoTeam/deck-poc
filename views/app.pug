@@ -33,8 +33,9 @@ block content
               .col-md-6
                 input.form-control#listName(required, placeholder="E.g: My new modern", type="text", name="name")
             div.form-group.row
-              label.col-md-8.col-form-label#labelName(for="listWanted") Searching/Giving
-              .col-md-4
-                input.form-control(data-toggle="toggle", type="checkbox", name="wanted")
+              label.col-md-12.col-form-label#labelName(for="listWanted") Searching/Giving
+              .col-md-12
+                input.form-control(data-toggle="toggle", type="checkbox", name="wanted", style="width=100px;height=50px;")
+            div.form-group.row
+              input.form-control(type="submit", style="font-size:2rem;", value="Add")
         .modal-footer
-          button.btn.btn-primary(type="submit", data-dismiss="modal") Add
