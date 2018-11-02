@@ -20,6 +20,21 @@ module.exports.isAuth = function (email, password) {
     });
 }
 
+module.exports.getUsersbylistid = function (list_id) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let bdd = new bddClass();
+            let res = [];
+            res = await bdd.query("SELECT users.id as id, users.email as email, users.username as name, users.phone as phone FROM users INNER JOIN list on list.user_id = users.id WHERE list.user_id ='" + list_id + "'");
+            bdd.close();
+            resolve(res);
+        } catch (error) {
+            console.log(error);
+            reject([]);
+        }
+    });
+}
+
 module.exports.getUsers = function (user_id, v) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -91,7 +106,7 @@ module.exports.getCords = function (user_id) {
     return new Promise(async (resolve, reject) => {
         try {
             let bdd = new bddClass();
-            let qry = await bdd.query("SELECT `user_id`, `latitude`, `longitude`, `timestamp` FROM `latest_coord` WHERE `user_id` = " + user_id );
+            let qry = await bdd.query("SELECT `user_id`, `latitude`, `longitude`, `timestamp` FROM `latest_coord` WHERE `user_id` = " + user_id);
             bdd.close();
             resolve(qry);
         } catch (error) {
@@ -152,8 +167,8 @@ module.exports.postUsers = function (user) {
             let sql = await bdd.query("INSERT INTO `users`(`email`, `username`, `password`, `phone`) VALUES ('"
                 + user.email + "','"
                 + user.name + "','"
-                + pwd + "','NULL')");
-            // + typeof user.phone == undefined ? 'NULL' : user.phone + "')");
+                + pwd + "','"+
+                + user.phone + "')");
             bdd.close();
             resolve({ success: true, user_id: sql.insertId });
         } catch (error) {

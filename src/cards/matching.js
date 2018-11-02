@@ -8,13 +8,13 @@ const contains = val => xs => xs.indexOf(val) !== -1;
 const any = fn => xs => xs.some(fn);
 
 const compareLists =
-      list1 =>
-      list2 => {
-          if (list1.wanted === list2.wanted)
-              return {};
-          if (any(flip(contains)(list2.card_list))(list1.card_list)) return list2;
-          return {};
-      };
+    list1 =>
+        list2 => {
+            if (list1.wanted == list2.wanted)
+                return {};
+            if (any(flip(contains)(list2.card_list))(list1.card_list)) return list2;
+            return {};
+        };
 
 const getId = user => user.id;
 

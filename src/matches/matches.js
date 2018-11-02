@@ -34,7 +34,7 @@ app.post("/", async (req, res) => {
     await bdd.updateCords(req.body, req.session.user_id);
     res.redirect('/match/' + req.body.list_id);
 });
-app.get("/:list_id", async (req, res) => {
+app.get("/:id", async (req, res) => {
     let usercord = await bdd.getCords(req.session.user_id);
     let otheruserlisttmp = await bdd.getOtherCords(req.session.user_id);
     let userlist = []
@@ -48,14 +48,25 @@ app.get("/:list_id", async (req, res) => {
             }
         }
     }
-    console.log(req.params.list_id);
-    let usrcard = await bdd.getlist(req.session.user_id, req.params.list_id);
-    // console.log("us", usrcard);
-    // let oklist = await matching_check.matchUser(usrcard[0], userlist);
-    // console.log("ok", oklist);
+    console.log(req.params.id);
+    let usrcard = await bdd.getlist(req.session.user_id, req.params.id);
+    console.log("us", usrcard[0]);
+    let finaluserlist = [];
+    if (usrcard[0]) {
+        let oklist = await matching_check.matchUser(usrcard[0], userlist);
+        console.log("ok", oklist);
+        for (let i = 0; i < oklist.length; i++) {
+            let tmp = await bdd.getUsersbylistid(oklist[i].id)
+            if (tmp[0] && !(tmp[0] in finaluserlist)){
+                finaluserlist.push(tmp[0]);
+            }
+        }
+    }
+
+    console.log("final", finaluserlist);
     res.render(
         'matches',
-        { matches: userlist }
+        { matches: finaluserlist }
     );
 });
 

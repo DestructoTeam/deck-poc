@@ -113,7 +113,7 @@ app.get("/profiledit", isAuthenticated, async (req, res) => {
 });
 app.post("/profiledit", isAuthenticated, async (req, res) => {
     await bdd.updateUsers(req.session.user_id, req.body);
-    res.redirect('/profile');
+    res.redirect('/user');
 });
 
 app.get("*", (req, res) => {

@@ -5,6 +5,7 @@ const mtg = require("mtgsdk");
 const app = module.exports = express();
 
 app.get("/:id", async (req, res) => {
+    console.log("listing.js ", req.params.id);
     let mlist = await bdd.getlist(req.session.user_id, req.params.id);
     mlist[0].cards = [];
     for (let i = 0; i < mlist[0].card_list.length; i++) {
