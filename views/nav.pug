@@ -1,14 +1,17 @@
-nav
-  a(href="/app") Deck-Poc
-  button(type="button")
-    span
-  div
-    ul
-      li
-        a(href="/list") Lists
-      li
-        a(href="/matches") Matches
-      li
-        a(href="/user") Profile
-      li
-        a(href="/sing") Disconnection
+nav.navbar.navbar-expand-lg.bg-dark
+  .container
+    a.navbar-brand(href="/app") Deck-Poc
+    button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarNav", aria-controls="navbarNav", aria-expanded="false", aria-label="Toggle navigation")
+      span.navbar-toggler-bar.navbar-kebab
+      span.navbar-toggler-bar.navbar-kebab
+      span.navbar-toggler-bar.navbar-kebab
+    .collapse.navbar-collapse#navbarNav
+      ul.navbar-nav
+        li.nav-item
+          a.nav-link(href="/list") Lists
+        li.nav-item
+          a.nav-link(href="/matches") Matches
+        li.nav-item
+          a.nav-link(href="/user") Profile
+        li.nav-item
+          a.nav-link(href="/sing") Disconnection

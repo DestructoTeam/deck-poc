@@ -1,3 +1,25 @@
-.other {
-  min-height: 100vh!important;
+.vertical-align {
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.cardo {
+    background: #fff;
+    box-shadow: 0 2px 2px 0;
+}
+
+.back-cardo {
+    box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(0, 0, 0, 0.5) !important;
+    background: linear-gradient(60deg, #101010, #757575) !important;
+}
+
+body {
+    width: 100% !important;
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
 }

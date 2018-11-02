@@ -1,19 +1,52 @@
 extends layout
 block script
+  link(rel="stylesheet", href="css/sing.css")
 block title
-  p Sign Up
 block content
-  form(method='POST' action='/sung')
-    div
-      label Name:
-      input(type='text', placeholder='first and last', name='name')
-    div
-      label Email:
-      input(type='email', placeholder='name@email.com', name='email')
-    div
-      label Password:
-      input(type='password', name='password')
-    div
-      label Confirm Password:
-      input(type='password', name='confirmPassword')
-    button(type='submit') Sign up
+  .card.card-login.vertical-align.cardo
+    form(method='POST' action='/sung')
+      .card-header.card-header-text.card-header-danger.back-cardo.text-center
+        .card-title
+          h4.card-title Sign Up
+        .social-line
+          a.btn.btn-just-icon.btn-link(href="#")
+            i.fa.fa-facebook-square
+          a.btn.btn-just-icon.btn-link(href="#")
+            i.fa.fa-twitter
+          a.btn.btn-just-icon.btn-link(href="#")
+            i.fa.fa-google-plus
+      p.description.text-center Already registered ?
+        a(href="/sing") Click here.
+      .card-body
+        span.bmd-form-group
+          div.input-group
+            div.input-group-prepend
+              span.input-group-text
+                i.material-icons face
+            input.form-control(type='text', placeholder='Name...', name='name')
+        span.bmd-form-group
+          div.input-group
+            div.input-group-prepend
+              span.input-group-text
+                i.material-icons mail
+            input.form-control(type='email', placeholder='Email...', name='email')
+        span.bmd-form-group
+          div.input-group
+            div.input-group-prepend
+              span.input-group-text
+                i.material-icons phone
+            input.form-control(type='text', placeholder='Phone number...', name='phone')
+        span.bmd-form-group
+          div.input-group
+            div.input-group-prepend
+              span.input-group-text
+                i.material-icons lock_outline
+            input.form-control(type='password', placeholder='Password...', name='password')
+        span.bmd-form-group
+          div.input-group
+            div.input-group-prepend
+              span.input-group-text
+                i.material-icons lock_outline
+            input.form-control(type='password', placeholder='Confirm password...', name='confirmPassword')
+      .footer.text-center
+        button.btn.btn-primary.btn-link.btn-wd.btn-lg(type='submit') Sign Up
