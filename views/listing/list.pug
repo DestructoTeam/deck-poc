@@ -8,6 +8,7 @@ block script
   script(src="../js/remove-card.js")
 block title
   p= list.name
+  p= list.wanted ? "wanted" : "giving"
 block navbar
   include ../nav
 block content

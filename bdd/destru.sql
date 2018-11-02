@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 31 oct. 2018 à 09:55
--- Version du serveur :  5.7.19
--- Version de PHP :  7.1.9
+-- Généré le :  ven. 02 nov. 2018 à 02:39
+-- Version du serveur :  5.7.23
+-- Version de PHP :  7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -35,6 +35,24 @@ CREATE TABLE IF NOT EXISTS `card` (
   `list_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_to_list_id` (`list_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `latest_coord`
+--
+
+DROP TABLE IF EXISTS `latest_coord`;
+CREATE TABLE IF NOT EXISTS `latest_coord` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `latitude` varchar(255) NOT NULL,
+  `longitude` varchar(255) NOT NULL,
+  `timestamp` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  UNIQUE KEY `user_id_2` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

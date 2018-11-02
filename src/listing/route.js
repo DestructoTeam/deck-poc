@@ -15,7 +15,7 @@ app.get("/:id", async (req, res) => {
 
     res.render(
         'listing/list',
-        { listId: req.params.id, list: mlist[0] }
+        { listId: req.params.id, wanted: mlist[0].wanted, list: mlist[0] }
     );
 });
 
@@ -28,9 +28,10 @@ app.delete("/", async (req, res) => {
 });
 
 app.post("/", (req, res) => {
+    console.log(req.body);
     bdd.postList(req.body.name,
                  req.session.user_id,
-                 checkIndex(req.body, "wanted"))
+                 checkIndex(req.body.wanted))
         .then(({success, list_id}) => {
             res.redirect('/list/' + list_id);
         });
@@ -44,8 +45,8 @@ app.get("/", async (req, res) => {
     );
 });
 
-const checkIndex = (obj, val) => {
-    if (obj.val)
+const checkIndex = (obj) => {
+    if (obj)
         return 1;
     else
         return 0;
