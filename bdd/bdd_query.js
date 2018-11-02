@@ -20,16 +20,16 @@ module.exports.isAuth = function (email, password) {
     });
 }
 
-module.exports.getUsers = function (user_id) {
+module.exports.getUsers = function (user_id, v) {
     return new Promise(async (resolve, reject) => {
         try {
             let bdd = new bddClass();
             let res = [];
-            if (typeof user_id === 'undefined') {
-                res = await bdd.query("SELECT `id`, `email`, `username` as name, `phone` FROM `users`");
+            if (typeof v === 'undefined') {
+                res = await bdd.query("SELECT `id`, `email`, `username` as name, `phone` FROM `users`WHERE `id` ='" + user_id + "'");
             }
             else {
-                res = await bdd.query("SELECT `id`, `email`, `username` as name, `phone` FROM `users` WHERE `id` ='" + user_id + "'");
+                res = await bdd.query("SELECT `id`, `email`, `username` as name, `phone` FROM `users` WHERE `id` !='" + user_id + "'");
             }
             bdd.close();
             resolve(res);
@@ -69,6 +69,53 @@ module.exports.getlist = function (user_id, list_id = "nope") {
         } catch (error) {
             console.log(error);
             reject([]);
+        }
+    });
+}
+
+module.exports.getOtherCords = function (user_id) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let bdd = new bddClass();
+            let qry = await bdd.query("SELECT `user_id`, `latitude`, `longitude`, `timestamp` FROM `latest_coord` WHERE `user_id` != '" + user_id + "'");
+            bdd.close();
+            resolve(qry);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+}
+
+
+module.exports.getCords = function (user_id) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let bdd = new bddClass();
+            let qry = await bdd.query("SELECT `user_id`, `latitude`, `longitude`, `timestamp` FROM `latest_coord` WHERE `user_id` = " + user_id );
+            bdd.close();
+            resolve(qry);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+}
+
+module.exports.updateCords = function (geo, user_id) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let bdd = new bddClass();
+            await bdd.query("INSERT INTO `latest_coord`(`user_id`, `latitude`, `longitude`, `timestamp`) VALUES ('"
+                + user_id
+                + "','" + geo.latitude
+                + "','" + geo.longitude
+                + "','" + geo.timestamp
+                + "') ON DUPLICATE KEY UPDATE `latitude` = '" + geo.latitude
+                + "', `longitude` = '" + geo.longitude
+                + "', `timestamp` = '" + geo.timestamp + "'");
+            bdd.close();
+            resolve(true);
+        } catch (error) {
+            console.log(error);
         }
     });
 }

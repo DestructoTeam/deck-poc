@@ -2,6 +2,7 @@ extends layout
 block script
   link(rel="stylesheet", type="text/css", href="app.css")
   link(rel="stylesheet", type="text/css", href="matches.css")
+  script(src="../js/geo.js")
 block title
   p Matches
 block navbar
@@ -10,7 +11,7 @@ block content
   ul
     each match, index in matches
       .row.row-list
-        a.offset-md-1.col-md-9(href='match/' + match.id)= match.name
+        a.offset-md-1.col-md-9(href='/user/' + match.id)= match.name
         button.close.col-md-2(type="button", aria-label="Close")
           span(aria-hidden="true") &times;
     else
