@@ -3,3 +3,12 @@
   background-color: #dee2e6;
   margin-bottom: 30px;
 }
+
+#labelName {
+  font-size:3rem;
+}
+
+#listName {
+  padding:2.375rem 1.75rem;
+  font-size:2rem;
+}
