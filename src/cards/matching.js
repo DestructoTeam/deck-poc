@@ -18,7 +18,7 @@ const compareLists =
 
 const getId = user => user.id;
 
-const matchUser = (list, users) => {
+module.exports.matchUser = (list, users) => {
     const users_id = R.map(getId, users);
     const users_list = R.map(bdd.getlist, users_id);
     return Promise.all(users_list).then(xs => {

@@ -1,5 +1,6 @@
 const express = require("express");
 const bdd = require("../../bdd/bdd_query");
+const matching_check = require("../cards/matching");
 
 const app = module.exports = express();
 
@@ -46,8 +47,12 @@ app.get("/:list_id", async (req, res) => {
                 userlist.push(tmp[0]);
             }
         }
-        console.log('fin', userlist);
     }
+    console.log(req.params.list_id);
+    let usrcard = await bdd.getlist(req.session.user_id, req.params.list_id);
+    // console.log("us", usrcard);
+    // let oklist = await matching_check.matchUser(usrcard[0], userlist);
+    // console.log("ok", oklist);
     res.render(
         'matches',
         { matches: userlist }
