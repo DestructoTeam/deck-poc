@@ -12,10 +12,10 @@ block content
     each list, index in lists
       .row.row-list(id='list' + list.id)
         a.offset-md-1.col-md-9(href='list/' + list.id)= list.name
-        p= list.wanted ? "wanted" : "giving"
-        button.btn.btn-primary(type='button', style="font-size:2rem;" onclick="geo(" + list.id + ");") geo go !
         button.close.col-md-2.remove-list(type="button", aria-label="Close", data-id=list.id, onclick="removeList(" + list.id + ");")
           span(aria-hidden="true") &times;
+        p.col-md-12(style="font-size:3.5rem;")= list.wanted ? "Searching" : "Giving"
+        button.btn.btn-primary(type='button', style="font-size:2rem;" onclick="geo(" + list.id + ");") Geo Go !
     else
       p No list.
     button.btn.btn-circle.btn-xl(type= "button", data-toggle="modal", data-target="#exampleModalCenter") +

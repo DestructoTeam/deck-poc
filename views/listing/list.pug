@@ -8,7 +8,7 @@ block script
   script(src="../js/remove-card.js")
 block title
   p= list.name
-  p= list.wanted ? "wanted" : "giving"
+  p(style="font-size:3.5rem;")= list.wanted ? "Searching" : "Giving"
 block navbar
   include ../nav
 block content
@@ -19,12 +19,10 @@ block content
           p.offset-md-1.col-md-9(style="font-size:3rem;")= card.name
           button.close.col-md-2(type="button", aria-label="Close", onclick="removeCard(" + card.cardId + ", " + listId + ");")
             span(aria-hidden="true") &times;
-        .row.col-md-8
+        .row.col-md-12
           img.rounded.mx-auto.d-block(style="margin-top:30px; margin-bottom:30px;", src=card.imageUrl)
-        .row.col-md-4
-          p(style="align-self:center;") Need
     else
-      p Your list is empty!
+      p#toRemove Your list is empty!
     button.btn.btn-circle.btn-xl#add(type= "button", data-toggle="modal", data-target="#exampleModalCenter") +
   #exampleModalCenter.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalCenterTitle", aria-hidden="true")
     .modal-dialog.modal-dialog-centered.modal-lg(role="document")
@@ -40,4 +38,4 @@ block content
               .col-md-8
                 input.form-control#inputSearch(placeholder="E.g: squee", type="text", onkeyup="searchCard(this.value)")
             div.form-goup#ourContainer
-        .modal-footer
+        .modal-footer#toRemove

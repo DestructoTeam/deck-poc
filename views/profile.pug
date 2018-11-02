@@ -2,8 +2,15 @@ extends layout
 block script
   link(rel="stylesheet", type="text/css", href="css/profile.css")
   link(rel="stylesheet", type="text/css", href="css/app.css")
+  link(rel="stylesheet", type="text/css", href="../css/profile.css")
+  link(rel="stylesheet", type="text/css", href="../css/app.css")
+  link(rel="stylesheet", type="text/css", href="css/all.css")
+  link(rel="stylesheet", type="text/css", href="../css/all.css")
 block title
-  p Your Profile
+  if owned
+    p Your Profile
+  else
+    p Match Profile
 block navbar
   include nav
 block content

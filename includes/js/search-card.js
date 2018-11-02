@@ -58,6 +58,8 @@ function addCard(id, url, name) {
     const rgx = /[^/]+$/;
     var xhttp = new XMLHttpRequest();
 
+    document.getElementById("toRemove").innerHTML = "";
+
     const row = document.createElement('div');
     const rowName = document.createElement('div');
     const rowUrl = document.createElement('div');
